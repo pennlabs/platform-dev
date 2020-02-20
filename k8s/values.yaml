@@ -5,6 +5,7 @@ applications:
   - name: platform-dev
     image: pennlabs/platform-dev
     secret: platform-dev
+    port: 8080
     ingress:
       hosts:
         - host: platform-dev.pennlabs.org
