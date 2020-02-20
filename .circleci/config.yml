@@ -8,7 +8,7 @@ branch-filters: &branch-filters
   filters:
     branches:
       only:
-        - development
+        - master
 
 workflows:
   version: 2
@@ -16,7 +16,6 @@ workflows:
     jobs:
       - django-tools/check:
           project-name: "Platform"
-          <<: *branch-filters
       - docker/publish:
           requires:
             - django-tools/check
