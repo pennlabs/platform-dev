@@ -1,0 +1,16 @@
+deploy_version: 0.1.15
+image_tag: latest
+
+applications:
+  - name: platform-dev
+    image: pennlabs/platform-dev
+    secret: platform-dev
+    ingress:
+      hosts:
+        - host: platform-dev.pennlabs.org
+          paths: ["/"]
+    extraEnv:
+      - name: DOMAIN
+        value: platform-dev.pennlabs.org
+      - name: DJANGO_SETTINGS_MODULE
+        value: Platform.settings.production
