@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 import dj_database_url
+from django.apps import apps
 
 
 DOMAIN = os.environ.get("DOMAIN", "example.com")
@@ -134,7 +135,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+
 # OAuth2 Settings
+def enforce_public(client_id):
+    Application = apps.get_model("oauth2_provider.Application")
+    client = Application.objects.get(client_id=client_id)
+    return client.client_type == client.CLIENT_PUBLIC
+
 
 OAUTH2_PROVIDER = {
     "SCOPES": {
@@ -143,6 +150,7 @@ OAUTH2_PROVIDER = {
         "introspection": "Introspect token scope",
     },
     "ALLOWED_REDIRECT_URI_SCHEMES": ["http", "https"],
+    "PKCE_REQUIRED": enforce_public,
 }
 
 # Custom User Model
